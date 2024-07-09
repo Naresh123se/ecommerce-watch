@@ -57,7 +57,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     res.status(201).json(createdOrder);
   }
-})
+});
 
 // @desc    Get logged in user orders
 // @route   GET /api/orders/myorders
@@ -88,19 +88,18 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @route   PUT /api/orders/:id/pay
 // @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  console.log("OKOK")
+  console.log('OKOK');
   // NOTE: here we need to verify the payment was made to PayPal before marking
   // the order as paid
   // const { value } = await verifyPayPalPayment(req.body.id);
   // // if (!verified) throw new Error('Payment not verified');
-
 
   // check if this transaction has been used before
   // const isNewTransaction = await checkIfNewTransaction(Order, req.body.id);
   // if (!isNewTransaction) throw new Error('Transaction has been used before');
 
   const order = await Order.findById(req.params.id);
- console.log(order)
+  console.log(order);
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
@@ -120,6 +119,20 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   }
 });
 
+// cancel order
+const cancelOrder = asyncHandler(async (req, res) => {
+  const orderId = req.params.id;
+
+  const result = await Order.deleteOne({ _id: orderId });
+
+  if (result.deletedCount === 1) {
+    res.json({ message: 'Cancel Order' });
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 // @desc    Update order to delivered
 // @route   GET /api/orders/:id/deliver
 // @access  Private/Admin
@@ -129,9 +142,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   if (order) {
     order.isDelivered = true;
     order.deliveredAt = Date.now();
-
     const updatedOrder = await order.save();
-
     res.json(updatedOrder);
   } else {
     res.status(404);
@@ -151,6 +162,7 @@ export {
   addOrderItems,
   getMyOrders,
   getOrderById,
+  cancelOrder,
   updateOrderToPaid,
   updateOrderToDelivered,
   getOrders,

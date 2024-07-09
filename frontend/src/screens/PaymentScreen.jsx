@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Col } from "react-bootstrap";
+import { Form, Button, Col,Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
@@ -28,10 +28,18 @@ const PaymentScreen = () => {
   };
 
   return (
-    <FormContainer>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: "20px",
+      marginTop:"50px"
+    }}  >
+      <Col md={4}  >
+        <Card >
       <CheckoutSteps step1 step2 step3 />
+      <Form onSubmit={submitHandler}    style={{padding:'20px'}}>
       <h1>Payment Method</h1>
-      <Form onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label as="legend">Select Method</Form.Label>
           <Col>
@@ -48,9 +56,19 @@ const PaymentScreen = () => {
           </Col>
         </Form.Group>
 
-        <Button type="submit">Continue</Button>
+<div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop:'10px',
+            }} >
+
+        <Button type="submit" >Continue</Button>
+</div>
       </Form>
-    </FormContainer>
+      </Card>
+      </Col>
+    </div>
   );
 };
 

@@ -21,18 +21,27 @@ const SearchBox = () => {
   };
 
   return (
-    <Form onSubmit={submitHandler} className='d-flex'>
+    <Form onSubmit={submitHandler} className='d-flex mx-2' style={{position:'relative'}}>
       <Form.Control
         type='text'
         name='q'
         onChange={(e) => setKeyword(e.target.value)}
         value={keyword}
         placeholder='Search Products...'
-        className='mr-sm-2 ml-sm-5'
-      ></Form.Control>
-      <Button type='submit' variant='success' className='p-2 mx-2'>
+        className='mr-sm-2 ml-sm-5 '
+        >
+      </Form.Control>
+   
+
+        <span onClick={submitHandler}  style={{cursor:'pointer', position:"absolute",  right:'10px', top:'10px' }}  >
+
+        <img src='/uploads/Search.png' width={20} height={20} alt='search' />
+ 
+      </span>
+      
+      {/* <Button type='submit' variant='success' className='p-2 '>
         Search
-      </Button>
+      </Button> */}
     </Form>
   );
 };

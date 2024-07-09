@@ -7,8 +7,10 @@ import Loader from "../components/Loader";
 import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
+  useCancelProductMutation,
   useDeliverOrderMutation,
 } from "../slices/ordersApiSlice";
+import { useNavigate } from "react-router-dom";
 import KhaltiButton from "../assets/KhaltiButton.png";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -32,6 +34,7 @@ const OrderScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [khaltiPay] = useInitiatePaymentMutation();
   const [isPending] = useState(false);
+  const nav =useNavigate();
   const handleClick = async (e) => {
     e.preventDefault();
     try {
@@ -81,6 +84,23 @@ const OrderScreen = () => {
       toast.success("Order delivered!");
     } catch (err) {
       toast.error(err?.data?.message || err.message);
+    }
+  };
+
+  const [CancelOrder, { isLoading: loadingDelete }] =
+  useCancelProductMutation();
+
+  const CancelOr = async (id) => {
+    if (window.confirm('Are you sure to cancel this order?')) {
+      try {
+        await CancelOrder(id);
+        refetch();
+        toast.success("Order Cancel Successfully!");
+        nav('/')
+
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
     }
   };
 
@@ -149,9 +169,9 @@ const OrderScreen = () => {
                       <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
                     <Col>
-                    <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
+                      <Link to={`/product/${item.product}`}>
+                        {item.name}
+                      </Link>
                     </Col>
                     <Col md={4}>
                       {item.qty} x Rs.{item.price} = Rs.{item.qty * item.price}
@@ -206,7 +226,7 @@ const OrderScreen = () => {
                         <div>
                           <Button
                             onClick={onApproveTest}
-                            style={{ marginBottom: "10px" }}
+                            style={{ marginBottom: "10px", backgroundColor:"#F63576"}}
                           >
                             Cash On Delivery
                           </Button>
@@ -224,7 +244,6 @@ const OrderScreen = () => {
                               maxWidth: "100%",
                               maxHeight: "100%",
                               border: "none",
-                              cursor: "pointer",
                               color: "transparent",
                               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                             }}
@@ -233,6 +252,23 @@ const OrderScreen = () => {
                           </Button>
                         </div>
                       </div>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight:'50px',
+                       marginTop:'20px',
+                       
+                      }}>
+                        <Button
+                        style={{background: "red",}}
+                        onClick={() =>CancelOr(order._id)}
+                        >
+                          Cancel Order
+                        </Button>
+                      </div>
+
+
                     </div>
                   )}
                 </ListGroup.Item>

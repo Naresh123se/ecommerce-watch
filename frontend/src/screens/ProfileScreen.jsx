@@ -53,11 +53,11 @@ const ProfileScreen = () => {
   };
 
   return (
-    <Row>
+    <Row style={{display:'flex'}}>
       <Col md={3}>
-        <h2>User Profile</h2>
 
-        <Form onSubmit={submitHandler}>
+        <Form onSubmit={submitHandler} style={{border:'1px solid gray', borderRadius:"10px", padding:'20px'  }}>
+        <h2>User Profile</h2>
           <Form.Group className='my-2' controlId='name'>
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -104,7 +104,9 @@ const ProfileScreen = () => {
           {loadingUpdateProfile && <Loader />}
         </Form>
       </Col>
-      <Col md={9}>
+ 
+
+      <Col md={9} style={{border:'1px solid #c5d1d6', padding:"10px"}} >
         <h2>My Orders</h2>
         {isLoading ? (
           <Loader />
@@ -157,6 +159,7 @@ const ProfileScreen = () => {
           </Table>
         )}
       </Col>
+     
     </Row>
   );
 };

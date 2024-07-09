@@ -37,6 +37,10 @@ const ProductScreen = () => {
     navigate('/cart');
   };
 
+  const checkoutHandler = () => {
+    navigate('/login?redirect=/shipping');
+  };
+
   const {
     data: product,
     isLoading,
@@ -64,7 +68,6 @@ const ProductScreen = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
-
   return (
     <>
       <Link className='btn btn-light my-3' to='/'>
@@ -146,7 +149,7 @@ const ProductScreen = () => {
                     </ListGroup.Item>
                   )}
 
-                  <ListGroup.Item>
+                  <ListGroup.Item style={{display:'flex' , gap:"30px"}}>
                     <Button
                     // style={{background:"red"}}
                       className='btn-block'
@@ -156,6 +159,17 @@ const ProductScreen = () => {
                     >
                       Add To Cart
                     </Button>
+                    
+                    <Button
+                    style={{background:"#26ABD4"}}
+                      className='btn-block'
+                      type='button'
+                      disabled={product.countInStock === 0}
+                      onClick={checkoutHandler}
+                    >
+                     Buy Now
+                    </Button>
+                    
                   </ListGroup.Item>
                 </ListGroup>
               </Card>

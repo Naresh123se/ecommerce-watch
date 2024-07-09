@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col,Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
@@ -49,9 +49,23 @@ const RegisterScreen = () => {
   };
 
   return (
-    <FormContainer>
-      <h1>Register</h1>
-      <Form onSubmit={submitHandler}>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: "20px",
+      // marginTop:"50px"
+    }}  >
+      <Col md={4}  >
+        <Card >
+          <Form onSubmit={submitHandler} style={{ padding: "20px" }}  >
+      <h1 style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+
+        }}>
+Register</h1>
         <Form.Group className='my-2' controlId='name'>
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -90,23 +104,39 @@ const RegisterScreen = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
+<div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
 
-        <Button disabled={isLoading} type='submit' variant='primary'>
+        }}>
+
+  
+        <Button disabled={isLoading} type='submit' variant='primary' >
           Register
         </Button>
+</div>
 
         {isLoading && <Loader />}
-      </Form>
 
       <Row className='py-3'>
-        <Col>
+        <Col style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+
+        }}>
+
           Already have an account?{' '}
           <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
             Login
           </Link>
         </Col>
       </Row>
-    </FormContainer>
+      </Form>
+      </Card>
+      </Col>
+    </div>
   );
 };
 

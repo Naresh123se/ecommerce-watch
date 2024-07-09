@@ -19,6 +19,7 @@ const CartScreen = () => {
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  console.log(cartItems);
 
   // NOTE: no need for an async function here as we are not awaiting the
   // resolution of a Promise

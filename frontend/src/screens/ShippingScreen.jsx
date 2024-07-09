@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import FormContainer from '../components/FormContainer';
@@ -27,10 +27,18 @@ const ShippingScreen = () => {
   };
 
   return (
-    <FormContainer>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+     
+ 
+    }}  >
+      <Col md={9}  style={{padding:"40px"}} >
+        <Card >
       <CheckoutSteps step1 step2 />
+      <Form onSubmit={submitHandler} style={{padding:'20px'}}  className='px-10 '>
       <h1>Shipping</h1>
-      <Form onSubmit={submitHandler}>
         <Form.Group className='my-2' controlId='address'>
           <Form.Label>Address</Form.Label>
           <Form.Control
@@ -75,11 +83,21 @@ const ShippingScreen = () => {
           ></Form.Control>
         </Form.Group>
 
+<div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop:'10px',
+            }}>
+
         <Button type='submit' variant='primary'>
           Continue
         </Button>
+</div>
       </Form>
-    </FormContainer>
+      </Card>
+      </Col>
+    </div>
   );
 };
 

@@ -102,7 +102,11 @@ const PlaceOrderScreen = () => {
           <Card>
             <ListGroup variant='flush'>
               <ListGroup.Item>
-                <h2>Order Summary</h2>
+                <h2 style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>Order Summary</h2>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
@@ -134,14 +138,21 @@ const PlaceOrderScreen = () => {
                 )}
               </ListGroup.Item>
               <ListGroup.Item>
+              <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop:'10px',
+            }}>
                 <Button
                   type='button'
                   className='btn-block'
                   disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
-                >
+                  >
                   Place Order
                 </Button>
+                  </div>
                 {isLoading && <Loader />}
               </ListGroup.Item>
             </ListGroup>
