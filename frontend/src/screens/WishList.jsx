@@ -13,12 +13,14 @@ import { FaTrash } from 'react-icons/fa';
 import Message from '../components/Message';
 import { addToCart, removeFromCart } from '../slices/cartSlice';
 
-const CartScreen = () => {
+const WishList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  
+  const { wishlistItems } = useSelector((state) => state.wishlists);
   // console.log(cartItems);
 
   // NOTE: no need for an async function here as we are not awaiting the
@@ -38,14 +40,14 @@ const CartScreen = () => {
   return (
     <Row>
       <Col md={8}>
-        <h1 style={{ marginBottom: '20px' }}>Shopping Cart</h1>
-        {cartItems.length === 0 ? (
+        <h1 style={{ marginBottom: '20px' }}>y Wishlist</h1>
+        {wishlistItems.length === 0 ? (
           <Message>
-            Your cart is empty <Link to='/'>Go Back</Link>
+            Your Wish list is empty <Link to='/'>Go Back</Link>
           </Message>
         ) : (
           <ListGroup variant='flush'>
-            {cartItems.map((item) => (
+            {wishlistItems.map((item) => (
               <ListGroup.Item key={item._id}>
                 <Row>
                   <Col md={2}>
@@ -115,4 +117,4 @@ const CartScreen = () => {
   );
 };
 
-export default CartScreen;
+export default WishList;

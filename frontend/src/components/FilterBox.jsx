@@ -31,7 +31,7 @@ const FilterBox = () => {
   return (
     <>
       <Button variant="outline-primary" onClick={handleShowModal}>
-        Open Filters
+      Filters
       </Button>
 
       <Modal show={showModal} onHide={handleCloseModal} centered>

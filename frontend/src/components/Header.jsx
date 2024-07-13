@@ -1,5 +1,5 @@
 import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
-import { FaShoppingCart, FaUser } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaRegHeart } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,9 +9,11 @@ import SearchBox from './SearchBox';
 import FilterBox from './FilterBox';
 import logo from '../assets/logo.png';
 import { resetCart } from '../slices/cartSlice';
+// import { WishList } from './wish-list';
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const { wishlistItems } = useSelector((state) => state.wishlists);
   const { userInfo } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const Header = () => {
 
   return (
     <header>
-<Navbar expand='lg' collapseOnSelect style={{ backgroundColor: '#F9E9DE ' }}>
+      <Navbar expand='lg' collapseOnSelect style={{ backgroundColor: '#F9E9DE ' }}>
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>
@@ -46,7 +48,19 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
               <SearchBox />
-              <FilterBox/>
+              <FilterBox />
+              {/* <WishList/> */}
+              <LinkContainer to='/wist'>
+                <Nav.Link>
+                  <FaRegHeart />
+                  {wishlistItems.length > 0 && (
+                    <Badge pill bg='success' style={{ marginLeft: '5px' }}>
+                      {wishlistItems.reduce((a, c) => a + c.qty, 0)}
+                    </Badge>
+                  )}
+                </Nav.Link>
+              </LinkContainer>
+
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <FaShoppingCart /> Cart

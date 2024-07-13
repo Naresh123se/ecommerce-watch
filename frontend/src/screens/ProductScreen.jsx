@@ -21,6 +21,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addToCart } from '../slices/cartSlice';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -31,6 +32,8 @@ const ProductScreen = () => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [wish, setWish] = useState(false);
+
 
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
@@ -105,15 +108,32 @@ const ProductScreen = () => {
               </ListGroup>
             </Col>
             <Col md={3}>
+
               <Card>
+
                 <ListGroup variant='flush'>
                   <ListGroup.Item>
                     <Row>
-                      <Col>Price:</Col>
-                      <Col>
-                        <strong>Rs. {product.price}</strong>
+
+                      <Col  >Price:
+
                       </Col>
-                     
+
+
+
+                      <Col style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <strong>Rs. {product.price}</strong>
+                        <div onClick={() => setWish((prev) => !prev)}>
+                          {wish ? <FaHeart fill='#DA5151' size={'25'} /> : <FaRegHeart size={'25'} />}
+                        </div>
+
+
+
+                      </Col>
+
+
+
+
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
@@ -149,9 +169,9 @@ const ProductScreen = () => {
                     </ListGroup.Item>
                   )}
 
-                  <ListGroup.Item style={{display:'flex' , gap:"30px"}}>
+                  <ListGroup.Item style={{ display: 'flex', gap: "30px" }}>
                     <Button
-                    // style={{background:"red"}}
+                      // style={{background:"red"}}
                       className='btn-block'
                       type='button'
                       disabled={product.countInStock === 0}
@@ -159,17 +179,17 @@ const ProductScreen = () => {
                     >
                       Add To Cart
                     </Button>
-                    
+
                     <Button
-                    style={{background:"#26ABD4"}}
+                      style={{ background: "#26ABD4" }}
                       className='btn-block'
                       type='button'
                       disabled={product.countInStock === 0}
                       onClick={checkoutHandler}
                     >
-                     Buy Now
+                      Buy Now
                     </Button>
-                    
+
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
