@@ -16,12 +16,12 @@ import { addToCart, removeFromCart } from '../slices/cartSlice';
 const WishList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  
+
   const { wishlistItems } = useSelector((state) => state.wishlists);
   // console.log(cartItems);
+
 
   // NOTE: no need for an async function here as we are not awaiting the
   // resolution of a Promise
@@ -95,7 +95,7 @@ const WishList = () => {
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 items
               </h2>
-              Rs. 
+              Rs.
               {cartItems
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}

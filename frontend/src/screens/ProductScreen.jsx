@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+// import { ToastContainer, toast } from 'react-toastify';
 import {
   Row,
   Col,
@@ -22,9 +23,11 @@ import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addToCart } from '../slices/cartSlice';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import {addToWistList} from '../slices/wishSlice'
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
+  // console.log({id: productId});
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,6 +74,23 @@ const ProductScreen = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
+
+
+
+  const handleWishClick = (product) => {
+
+    dispatch(addToWistList(product));
+    // const newWishState = !wish;
+    // setWish(newWishState);
+    // setTimeout(() => {
+    //   if (newWishState) {
+    //     toast.success('Added to wishlist');
+    //   } else {
+    //     toast.success('Removed from wishlist');
+    //   }
+    // }, 0); // Adding a delay of 0 milliseconds to ensure the toast is called once
+  };
+
   return (
     <>
       <Link className='btn btn-light my-3' to='/'>
@@ -123,9 +143,16 @@ const ProductScreen = () => {
 
                       <Col style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <strong>Rs. {product.price}</strong>
-                        <div onClick={() => setWish((prev) => !prev)}>
+                        {/* <div onClick={() => setWish((prev) => !prev)}>
                           {wish ? <FaHeart fill='#DA5151' size={'25'} /> : <FaRegHeart size={'25'} />}
-                        </div>
+                        </div> */}
+
+<div>
+      <div onClick={() =>handleWishClick(product)}>
+        {wish ? <FaHeart fill='#DA5151' size={'25'} /> : <FaRegHeart size={'25'} />}
+      </div>
+      {/* <ToastContainer /> */}
+    </div>
 
 
 
