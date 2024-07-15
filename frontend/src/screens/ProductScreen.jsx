@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +23,7 @@ import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addToCart } from '../slices/cartSlice';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
-import {addToWistList} from '../slices/wishSlice'
+import { addToWistList, removeWishItem } from '../slices/wishSlice'
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -36,6 +36,7 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [wish, setWish] = useState(false);
+
 
 
   const addToCartHandler = () => {
@@ -55,13 +56,12 @@ const ProductScreen = () => {
   } = useGetProductDetailsQuery(productId);
 
   const { userInfo } = useSelector((state) => state.auth);
-
-  const [createReview, { isLoading: loadingProductReview }] =
-    useCreateReviewMutation();
+  const { wishlistItems } = useSelector(state => state.wishlists);
+  const isItemInWishlist = wishlistItems?.some(wishlistItem => wishlistItem._id === productId);
+  const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     try {
       await createReview({
         productId,
@@ -79,17 +79,20 @@ const ProductScreen = () => {
 
   const handleWishClick = (product) => {
 
-    dispatch(addToWistList(product));
-    // const newWishState = !wish;
-    // setWish(newWishState);
-    // setTimeout(() => {
-    //   if (newWishState) {
-    //     toast.success('Added to wishlist');
-    //   } else {
-    //     toast.success('Removed from wishlist');
-    //   }
-    // }, 0); // Adding a delay of 0 milliseconds to ensure the toast is called once
+    // dispatch(addToWistList(product));
+    const newWishState = !wish;
+    setWish(newWishState);
+    setTimeout(() => {
+      if (newWishState) {
+        dispatch(addToWistList(product));
+      } else {
+        toast.success('Removed from wishlist');
+        dispatch(removeWishItem(product._id));
+        // dispatch(addToWistList(product));
+      }
+    }, 0); // Adding a delay of 0 milliseconds to ensure the toast is called once
   };
+
 
   return (
     <>
@@ -128,39 +131,22 @@ const ProductScreen = () => {
               </ListGroup>
             </Col>
             <Col md={3}>
-
               <Card>
-
                 <ListGroup variant='flush'>
                   <ListGroup.Item>
                     <Row>
-
                       <Col  >Price:
-
                       </Col>
-
-
-
                       <Col style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <strong>Rs. {product.price}</strong>
-                        {/* <div onClick={() => setWish((prev) => !prev)}>
-                          {wish ? <FaHeart fill='#DA5151' size={'25'} /> : <FaRegHeart size={'25'} />}
-                        </div> */}
-
-<div>
-      <div onClick={() =>handleWishClick(product)}>
-        {wish ? <FaHeart fill='#DA5151' size={'25'} /> : <FaRegHeart size={'25'} />}
-      </div>
-      {/* <ToastContainer /> */}
-    </div>
-
-
-
+                        <div>
+                          <div onClick={() => handleWishClick(product)}>
+                            {
+                              isItemInWishlist ? <FaHeart fill='#FF435D' /> : <FaRegHeart />
+                            }
+                          </div>
+                        </div>
                       </Col>
-
-
-
-
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
@@ -216,7 +202,6 @@ const ProductScreen = () => {
                     >
                       Buy Now
                     </Button>
-
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
@@ -237,9 +222,7 @@ const ProductScreen = () => {
                 ))}
                 <ListGroup.Item>
                   <h2>Write a Customer Review</h2>
-
                   {loadingProductReview && <Loader />}
-
                   {userInfo ? (
                     <Form onSubmit={submitHandler}>
                       <Form.Group className='my-2' controlId='rating'>

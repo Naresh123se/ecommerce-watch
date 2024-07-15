@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const initialState = {
   wishlistItems: localStorage.getItem('wishlistItems')
@@ -11,19 +12,31 @@ const wishSlice = createSlice({
   initialState,
   reducers: {
     addToWistList: (state, action) => {
-      let buildWishlistItems = { ...action.payload };
-      state.wishlistItems?.push(buildWishlistItems);
-      localStorage.setItem('wishlistItems',JSON.stringify(state.wishlistItems));
+      let existingWishlist = state.wishlistItems?.findIndex(
+        (item) => item._id === action.payload?._id
+      );
+
+        toast.success('Added to wishlist');
+        let buildWishlistItems = { ...action.payload };
+        state.wishlistItems?.push(buildWishlistItems);
+        localStorage.setItem(
+          'wishlistItems',
+          JSON.stringify(state.wishlistItems)
+        );
+      
     },
 
-    removeWishItem: (state, action) => {},
-    // NOTE: here we need to reset state for when a user logs out so the next
-    // user doesn't inherit the previous users cart and shipping
-    // resetCart: (state) => (state = initialState),
+    removeWishItem: (state, action) => {
+      const updatedWishlists = (state.wishlistItems =
+        state.wishlistItems?.filter((x) => x?._id !== action.payload));
+      state.wishlistItems = updatedWishlists;
+      localStorage.setItem(
+        'wishlistItems',
+        JSON.stringify(state.wishlistItems)
+      );
+    },
   },
 });
 
-export const { addToWistList, removeWishItem, clearAllWishlist } =
-  wishSlice.actions;
-
+export const { addToWistList, removeWishItem } = wishSlice.actions;
 export default wishSlice.reducer;

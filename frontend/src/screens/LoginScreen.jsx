@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
 
 import { useLoginMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
@@ -17,7 +16,6 @@ const LoginScreen = () => {
   const navigate = useNavigate();
 
   const [login, { isLoading }] = useLoginMutation();
-
   const { userInfo } = useSelector((state) => state.auth);
 
   const { search } = useLocation();
@@ -99,7 +97,7 @@ const LoginScreen = () => {
                 alignItems: 'center',
 
               }}>
-
+                
                 New Customer?{' '}
                 <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
                   Register

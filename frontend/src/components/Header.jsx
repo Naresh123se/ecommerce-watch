@@ -1,5 +1,5 @@
 import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
-import { FaShoppingCart, FaUser, FaRegHeart } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaHeart } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { resetCart } from '../slices/cartSlice';
 // import { WishList } from './wish-list';
 
 const Header = () => {
+
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlists);
   const { userInfo } = useSelector((state) => state.auth);
@@ -52,15 +53,15 @@ const Header = () => {
               {/* <WishList/> */}
               <LinkContainer to='/wist'>
                 <Nav.Link>
-                  <FaRegHeart />
-                  {wishlistItems.length > 0 && (
-                    <Badge pill bg='success' style={{ marginLeft: '5px' }}>
-                      {wishlistItems.reduce((a, c) => a + c.qty, 0)}
+                  <FaHeart fill='#808A96' />
+
+                  {wishlistItems?.length > 0 && (
+                    <Badge pill bg="success" style={{ marginLeft: '5px' }}>
+                      {wishlistItems.length}
                     </Badge>
                   )}
                 </Nav.Link>
               </LinkContainer>
-
               <LinkContainer to='/cart'>
                 <Nav.Link>
                   <FaShoppingCart /> Cart
