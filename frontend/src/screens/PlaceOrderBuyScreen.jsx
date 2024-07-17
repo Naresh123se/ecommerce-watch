@@ -9,7 +9,7 @@ import Loader from '../components/Loader';
 import { useCreateOrderMutation } from '../slices/ordersApiSlice';
 import { clearCartItems } from '../slices/cartSlice';
 
-const PlaceOrderScreen = () => {
+const PlaceOrderBuyScreen = () => {
   const navigate = useNavigate();
 
   const cart = useSelector((state) => state.cart);
@@ -163,4 +163,4 @@ const PlaceOrderScreen = () => {
   );
 };
 
-export default PlaceOrderScreen;
+export default PlaceOrderBuyScreen;
