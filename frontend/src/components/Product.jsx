@@ -24,7 +24,15 @@ const Product = ({ product }) => {
         </Card.Text>
 
         <Card.Text as='p'>Category:{product.category}</Card.Text>
-        <Card.Text as='h3'> Rs. {product.price}</Card.Text>
+        <Card.Text as='h3' style={{ marginBottom: '2px' }} > Rs. {product.price}</Card.Text>
+        {product.dis !== 0 && (
+          <>
+            <Card.Text as='h7' class="text-decoration-line-through"> Rs. {product.price}</Card.Text>
+            <Card.Text as='h7' > -{product.dis}%</Card.Text>
+          </>
+        )}
+
+
       </Card.Body>
     </Card>
   );

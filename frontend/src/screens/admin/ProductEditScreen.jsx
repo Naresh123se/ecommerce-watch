@@ -16,6 +16,8 @@ const ProductEditScreen = () => {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
+  const [dis, setDis] = useState(0);
+  const [aprice, setAprice] = useState(0);
   const [image, setImage] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
@@ -44,6 +46,8 @@ const ProductEditScreen = () => {
         productId,
         name,
         price,
+        dis,
+        aprice,
         image,
         brand,
         category,
@@ -62,6 +66,8 @@ const ProductEditScreen = () => {
     if (product) {
       setName(product.name);
       setPrice(product.price);
+      setDis(product.dis);
+      setAprice(product.aprice);
       setImage(product.image);
       setBrand(product.brand);
       setCategory(product.category);
@@ -113,6 +119,25 @@ const ProductEditScreen = () => {
                 placeholder='Enter price'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+              ></Form.Control>
+
+            </Form.Group>
+            <Form.Group controlId='dis'>
+              <Form.Label>Dis%</Form.Label>
+              <Form.Control
+                type='number'
+                placeholder='Enter discount'
+                value={dis}
+                onChange={(e) => setDis(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='aprice'>
+              <Form.Label>Ac.Price</Form.Label>
+              <Form.Control
+                type='number'
+                placeholder='Enter Actual Price'
+                value={aprice}
+                onChange={(e) => setAprice(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
