@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   Row,
   Col,
@@ -21,6 +22,8 @@ const CartScreen = () => {
   const { cartItems } = cart;
   // console.log(cartItems);
 
+  
+
   // NOTE: no need for an async function here as we are not awaiting the
   // resolution of a Promise
   const addToCartHandler = (product, qty) => {
@@ -32,6 +35,7 @@ const CartScreen = () => {
   };
 
   const checkoutHandler = () => {
+  localStorage.setItem("Action", false);
     navigate('/login?redirect=/shipping');
   };
 

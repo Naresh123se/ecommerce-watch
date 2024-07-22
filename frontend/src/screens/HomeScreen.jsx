@@ -8,6 +8,7 @@ import Message from '../components/Message';
 import Paginate from '../components/Paginate';
 import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/Meta';
+import { PaymentReceipt } from '../components/wish-list';
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -35,6 +36,8 @@ const HomeScreen = () => {
         </Message>
       ) : (
         <>
+        {/* <PaymentReceipt/> */}
+
           <Meta />
           <h1>Latest Products</h1>
           <Row>
@@ -45,6 +48,7 @@ const HomeScreen = () => {
               </Col>
             ))}
           </Row>
+
           <Paginate
             pages={data.pages}
             page={data.page}

@@ -47,7 +47,7 @@ const ProductScreen = () => {
 
   const checkoutHandler = () => {
     dispatch(addToBuy({ ...product, qty }));
-
+    localStorage.setItem("Action", true);
     navigate('/login?redirect=/shipping');
   };
 
