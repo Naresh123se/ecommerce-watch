@@ -8,16 +8,13 @@ import Message from '../components/Message';
 import Paginate from '../components/Paginate';
 import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/Meta';
-import { PaymentReceipt } from '../components/wish-list';
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
-
   const { data, isLoading, error } = useGetProductsQuery({
     keyword,
     pageNumber,
   });
-  
 
   return (
     <>
@@ -36,7 +33,6 @@ const HomeScreen = () => {
         </Message>
       ) : (
         <>
-        {/* <PaymentReceipt/> */}
 
           <Meta />
           <h1>Latest Products</h1>
@@ -44,7 +40,6 @@ const HomeScreen = () => {
             {data.products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                 <Product product={product} />
-                
               </Col>
             ))}
           </Row>

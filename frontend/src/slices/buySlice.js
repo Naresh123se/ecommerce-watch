@@ -11,22 +11,14 @@ const buySlice = createSlice({
   initialState,
   reducers: {
     addToBuy: (state, action) => {
-        console.log("first")
-      // NOTE: we don't need user, rating, numReviews or reviews
-      // in the cart
       const { user, rating, numReviews, reviews, ...item } = action.payload;
-
-      const existItem = state.cartItems.find((x) => x._id === item._id);
-
-      if (existItem) {
-        state.cartItems = state.cartItems.map((x) =>
-          x._id === existItem._id ? item : x
-        );
-      } else {
-        state.cartItems = [...state.cartItems, item];
-      }
+    
+      // Clear the cartItems array to ensure only one item is stored
+      state.cartItems = [item];
+    
       return updateBuy(state, item);
     },
+    
     removeFromBuy: (state, action) => {
       state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);
       return updateBuy(state);
