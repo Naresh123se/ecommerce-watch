@@ -22,6 +22,10 @@ const ShippingScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    localStorage.setItem('name', JSON.stringify({ address, city, postalCode, country }));
+
+  console.log(address, city)
+
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate('/payment');
   };

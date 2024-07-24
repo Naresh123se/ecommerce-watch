@@ -33,11 +33,17 @@ const CartScreen = () => {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
+  const cartItemss = JSON.parse(localStorage.getItem('cart'));
+  const carttt = cartItemss.cartItems
+  
 
   const checkoutHandler = () => {
   localStorage.setItem("Action", false);
+  localStorage.setItem('Product', JSON.stringify(carttt));
+  
     navigate('/login?redirect=/shipping');
   };
+ 
 
   return (
     <Row>
@@ -52,6 +58,7 @@ const CartScreen = () => {
             {cartItems.map((item) => (
               <ListGroup.Item key={item._id}>
                 <Row>
+
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>

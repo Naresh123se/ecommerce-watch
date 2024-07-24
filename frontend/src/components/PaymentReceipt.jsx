@@ -1,7 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-
 import { FaPlus, FaPrint } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 const PaymentReceipt = () => {
@@ -9,8 +7,12 @@ const PaymentReceipt = () => {
   const cart = useSelector((state) => state.cart);
   const Buy = useSelector((state) => state.buy);
   const Auth = useSelector((state) => state.auth);
-  let Dat= new Date().toISOString().split('T')[0];
+  let Dat = new Date().toISOString().split('T')[0];
 
+  const Pro = JSON.parse(localStorage.getItem('Product'));
+  console.log(Pro)
+  const totalPrice = Pro.reduce((sum, item) => sum + item.price, 0);
+  console.log(totalPrice)
   const Print = () => {
     window.print();
   };
@@ -58,7 +60,7 @@ const PaymentReceipt = () => {
 
                   <div>
                     <div className="text-muted  d-flex justify-content-end">Payment Date</div>
-                    <strong className='d-flex justify-content-end'>Feb/09/20</strong>
+                    <strong className='d-flex justify-content-end'>{Dat}</strong>
                   </div>
                 </div>
 
@@ -88,6 +90,19 @@ const PaymentReceipt = () => {
                   </div>
                 </div>
 
+                <div>
+                  {Pro.map((item) => (
+
+                    <div key={item._id}>
+                      {console.log(item.price)}
+                      <p>
+                        {item.price}
+                      </p>
+                    </div>
+
+                  ))}
+                </div>
+
                 <table className="table border-bottom border-gray-200 mt-3">
                   <thead>
                     <tr>
@@ -103,22 +118,22 @@ const PaymentReceipt = () => {
                     </tr>
                     <tr>
                       <td className="px-0">Shipping Charge</td>
-                      <td className="text-end px-0">$80.00</td>
+                      <td className="text-end px-0">{cart.shippingPrice}</td>
                     </tr>
-               
+
                   </tbody>
                 </table>
 
                 <div className="mt-5">
                   <div className="d-flex justify-content-end">
                     <p className="text-muted me-3">Subtotal:</p>
-                    <span>$390.00</span>
+                    <span>{cart.cartItems[0].aprice}</span>
                   </div>
                   <div className="d-flex justify-content-end">
                     <p className="text-muted me-3">Discount:</p>
-                    <span>-$40.00</span>
+                    <span>-{cart.cartItems[0].aprice - Buy.totalPrice}</span>
                   </div>
-                  
+
                   <div className="d-flex justify-content-end mt-3">
                     <h5 className="me-3">Total:</h5>
                     <h5 className="text-success">    Rs.{Buy.totalPrice}</h5>
