@@ -20,9 +20,6 @@ const CartScreen = () => {
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  // console.log(cartItems);
-
-  
 
   // NOTE: no need for an async function here as we are not awaiting the
   // resolution of a Promise
@@ -33,17 +30,18 @@ const CartScreen = () => {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
-  const cartItemss = JSON.parse(localStorage.getItem('cart'));
+  const cartItemss = JSON.parse(localStorage.getItem('cart')) || [];
   const carttt = cartItemss.cartItems
-  
+  const taxPrice = cartItemss.taxPrice
+  const itemsPrice = cartItemss.itemsPrice
+  const shippingPrice = cartItemss.shippingPrice
+  const totalPrice = cartItemss.totalPrice
 
   const checkoutHandler = () => {
-  localStorage.setItem("Action", false);
-  localStorage.setItem('Product', JSON.stringify(carttt));
-  
+    localStorage.setItem("Action", false);
+    localStorage.setItem('Product', JSON.stringify({ carttt, taxPrice, itemsPrice, shippingPrice, totalPrice }));
     navigate('/login?redirect=/shipping');
   };
- 
 
   return (
     <Row>
@@ -104,7 +102,7 @@ const CartScreen = () => {
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 items
               </h2>
-              Rs. 
+              Rs.
               {cartItems
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}

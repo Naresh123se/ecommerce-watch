@@ -11,8 +11,8 @@ const PaymentReceipt = () => {
 
   const Pro = JSON.parse(localStorage.getItem('Product'));
   console.log(Pro)
-  const totalPrice = Pro.reduce((sum, item) => sum + item.price, 0);
-  console.log(totalPrice)
+  // const totalPrice = Pro.reduce((sum, item) => sum + item.aprice, 0);
+  // console.log(totalPrice)
   const Print = () => {
     window.print();
   };
@@ -91,54 +91,53 @@ const PaymentReceipt = () => {
                 </div>
 
                 <div>
-                  {Pro.map((item) => (
 
+                </div>
+                <>
+                  {Pro.carttt.map((item) => (
                     <div key={item._id}>
-                      {console.log(item.price)}
-                      <p>
-                        {item.price}
-                      </p>
+                <h1>{item.taxPrice}</h1>
+                    </div>
+                  ))}
+
+
+                  <table className="table border-bottom border-gray-200 mt-3">
+                    <thead>
+                      <tr>
+                        <th scope="col" className="fs-sm text-dark text-uppercase-bold-sm px-0">Description</th>
+                        <th scope="col" className="fs-sm text-dark text-uppercase-bold-sm text-end px-0">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="px-0">Tax Price
+                        </td>
+                        <td className="text-end px-0"> {cart.taxPrice}</td>
+                      </tr>
+                      <tr>
+                        <td className="px-0">Shipping Charge</td>
+                        <td className="text-end px-0">{cart.shippingPrice}</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+                  <div className="mt-5">
+                    <div className="d-flex justify-content-end">
+                      <p className="text-muted me-3">Subtotal:</p>
+                      <span>{cart.cartItems[0].aprice}</span>
+                    </div>
+                    <div className="d-flex justify-content-end">
+                      <p className="text-muted me-3">Discount:</p>
+                      <span>-{cart.cartItems[0].aprice - Buy.totalPrice}</span>
                     </div>
 
-                  ))}
-                </div>
-
-                <table className="table border-bottom border-gray-200 mt-3">
-                  <thead>
-                    <tr>
-                      <th scope="col" className="fs-sm text-dark text-uppercase-bold-sm px-0">Description</th>
-                      <th scope="col" className="fs-sm text-dark text-uppercase-bold-sm text-end px-0">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="px-0">Tax Price
-                      </td>
-                      <td className="text-end px-0"> {cart.taxPrice}</td>
-                    </tr>
-                    <tr>
-                      <td className="px-0">Shipping Charge</td>
-                      <td className="text-end px-0">{cart.shippingPrice}</td>
-                    </tr>
-
-                  </tbody>
-                </table>
-
-                <div className="mt-5">
-                  <div className="d-flex justify-content-end">
-                    <p className="text-muted me-3">Subtotal:</p>
-                    <span>{cart.cartItems[0].aprice}</span>
+                    <div className="d-flex justify-content-end mt-3">
+                      <h5 className="me-3">Total:</h5>
+                      <h5 className="text-success">    Rs.{Buy.totalPrice}</h5>
+                    </div>
                   </div>
-                  <div className="d-flex justify-content-end">
-                    <p className="text-muted me-3">Discount:</p>
-                    <span>-{cart.cartItems[0].aprice - Buy.totalPrice}</span>
-                  </div>
-
-                  <div className="d-flex justify-content-end mt-3">
-                    <h5 className="me-3">Total:</h5>
-                    <h5 className="text-success">    Rs.{Buy.totalPrice}</h5>
-                  </div>
-                </div>
+                </>
               </div>
             </div>
           </div>
