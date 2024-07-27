@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import '../Index.css';
+
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import { useInitiatePaymentMutation } from "../slices/khaltiSlice.js";
 import Message from "../components/Message";
@@ -14,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import KhaltiButton from "../assets/KhaltiButton.png";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { PaymentReceipt } from "../components/PaymentReceipt.jsx";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -50,7 +53,11 @@ const OrderScreen = () => {
       console.error(err);
     }
   };
-
+  const [showPopup, setShowPopup] = useState();
+  const closePopup = () => {
+    console.log('Closing');
+    setShowPopup(false); // Close the popup
+  };
   useEffect(() => {
     async function onApproveKhalti() {
       await payOrder({ orderId, details: { payer: {} } });
@@ -59,6 +66,8 @@ const OrderScreen = () => {
     if (status === "Completed") {
       setKhalti(true);
       onApproveKhalti();
+      setShowPopup(true);
+      console.log("first")
     }
   }, [orderId, payOrder, refetch, status]);
 
@@ -74,6 +83,7 @@ const OrderScreen = () => {
   async function onApproveTest() {
     await payOrder({ orderId, details: { payer: {} } });
     refetch();
+    setShowPopup(true);
     toast.success("Payment Successful!");
   }
 
@@ -110,6 +120,7 @@ const OrderScreen = () => {
     <Message variant="danger">{error.data.message}</Message>
   ) : (
     <>
+      <PaymentReceipt show={showPopup} onClose={closePopup} /> 
       <h1>Order {order._id}</h1>
       <Row>
         <Col md={8}>

@@ -276,7 +276,7 @@ const [action, setAction] = useState();
           <Row>
             <Col>Total</Col>
             <Col>Rs.{cart.totalPrice}</Col>
-            <Col>Rs.{Buy.totalPrice}</Col>
+            {/* <Col>Rs.{Buy.totalPrice}</Col> */}
           </Row>
         </ListGroup.Item>
         <ListGroup.Item>
