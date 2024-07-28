@@ -43,7 +43,7 @@ const PaymentReceipt =  ({ show, onClose }) => {
   return (
     <>
 
-      <div className="container mt-6 mb-7 print">
+      <div className="container mt-6 mb-7 print popup">
         <style>
           {
             `

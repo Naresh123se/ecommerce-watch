@@ -13,7 +13,6 @@ import {
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
-
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [dis, setDis] = useState(0);
@@ -178,18 +177,17 @@ const ProductEditScreen = () => {
             </Form.Group>
 
             <Form.Group controlId='category'>
-  <Form.Label>Category</Form.Label>
-  <Form.Control
-    as='select'
-    value={category}
-    onChange={(e) => setCategory(e.target.value)}
-  >
-    <option value=''>Select category</option>
-    <option value='Men'>Men</option>
-    <option value='Woman'>Woman</option>
-  </Form.Control>
-</Form.Group>
-
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                as='select'
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value=''>Select category</option>
+                <option value='Men'>Men</option>
+                <option value='Women'>Women</option>
+              </Form.Control>
+            </Form.Group>
 
             <Form.Group controlId='description'>
               <Form.Label>Description</Form.Label>

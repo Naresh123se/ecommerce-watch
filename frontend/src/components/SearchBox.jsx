@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { FaSearch } from "react-icons/fa"
 
 const SearchBox = () => {
   const navigate = useNavigate();
   const { keyword: urlKeyword } = useParams();
   const ok = useParams();
-   console.log(ok);
 
   // FIX: uncontrolled input - urlKeyword may be undefined
   const [keyword, setKeyword] = useState(urlKeyword || '');
@@ -34,16 +34,12 @@ const SearchBox = () => {
         >
       </Form.Control>
    
+      <FaSearch size={23} onClick={submitHandler} style={{cursor:'pointer', position:"absolute",  right:'10px', top:'11px' }} />
+        
 
-        <span onClick={submitHandler}  style={{cursor:'pointer', position:"absolute",  right:'10px', top:'10px' }}  >
-
-        <img src='/uploads/Search.png' width={20} height={20} alt='search' />
  
-      </span>
       
-      {/* <Button type='submit' variant='success' className='p-2 '>
-        Search
-      </Button> */}
+   
     </Form>
   );
 };
