@@ -31,6 +31,15 @@ const authUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
+  // Define the password regex for validation
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  // Check if the password matches the regex
+  if (!passwordRegex.test(password)) {
+    res.status(400);
+    throw new Error('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character');
+  }
+
   const userExists = await User.findOne({ email });
 
   if (userExists) {
@@ -58,6 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid user data');
   }
 });
+
 
 // @desc    Logout user / clear cookie
 // @route   POST /api/users/logout
